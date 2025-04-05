@@ -9,10 +9,10 @@ const auth = (req, res, next) => {
       req.user = decoded;
       next();
     }else{
-        res.redirect("/");
+        res.status(401).json({ message: "Unauthorized" });
     }
   } catch (error) {
-    res.redirect("/");
+    res.status(401).json({ message: "Unauthorized" });
   }
 };
 
