@@ -6,9 +6,9 @@ import connectDB from "./db.js";
 import express from "express";
 import { port } from "./conf.js";
 
-const app = express();
-
 connectDB();
+
+const app = express();
 
 app.use(express.json());
 
@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 
 app.use("/signup", signupRoute);
 app.use("/signin", signinRoute);
-app.use("/todo", auth,  todoRoute);
+app.use("/todo", auth, todoRoute);
 
 app.listen(3000, () => {
   console.log("Server started at port: ", port);
