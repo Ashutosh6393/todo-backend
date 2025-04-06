@@ -4,7 +4,7 @@ import { Schema} from "mongoose";
 
 const ObjectId = mongoose.ObjectId;
 const userSchema = new Schema({
-    email: String,
+    email: {type: String, required: true, unique: true},
     password: String,
     name: String
 })
