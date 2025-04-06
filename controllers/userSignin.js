@@ -2,9 +2,21 @@ import { userModel } from "../models/schema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { jwtSecret } from "../conf.js";
+import { z } from "zod";
+
+const signinSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
 
 export const userSignin = async (req, res) => {
-  const { email, password } = req.body;
+  const validated = signinSchema.safeParse(req.body);
+
+  if (!validated.success) {
+    return res.status(400).json({ errors: validated.error.flatten() });
+  }
+
+  const { email, password } = validated.data;
 
   try {
     const user = await userModel.findOne({ email });
